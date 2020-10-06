@@ -1,0 +1,38 @@
+<div class="container">
+    <section class="mt-5">
+        <div class="col m-auto"><br>
+            <h2 class="text-center">URL Shortner</h2>
+            <br>
+            <form action="/shrink" method="POST">
+                <div class="form-group">
+                    
+                    <input type="url" class="form-control" name="URL" id="URL" aria-describedby="emailHelp"
+                        placeholder="URL">
+                        <br>
+                    <div class="text-center">
+                    <button type="submit" class="btn btn-primary ">Shrink URL</button>
+                </div>
+
+            </form>
+        </div>
+        <br>
+        <table class="table table-bordered ">
+
+  <thead>
+    <tr class="text-center">
+      <th scope="col">Website URL</th>
+      <th scope="col">Shrinked URL</th>
+    </tr>
+  </thead>
+  <tbody class="text-center">
+      {{#each displayUrl}}
+    <tr>
+      <td><a href="{{this.orginalUrl}}">{{this.orginalUrl}}</a></td>
+      <td><a href="/{{this.shrinkedUrl}}">{{this.shrinkedUrl}}</a></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+    </section>
+</div>
