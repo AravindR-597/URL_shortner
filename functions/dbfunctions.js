@@ -1,7 +1,8 @@
 var db = require("../config/connection");
 var collection = require("../config/collections");
+const { ObjectId } = require("mongodb");
 module.exports = {
-  add: (url, callback) => {
+  addUrl: (url, callback) => {
     db.get()
       .collection(collection.URL_COLLECTION)
       .insertOne(url)
@@ -9,26 +10,35 @@ module.exports = {
         callback(data);
       });
   },
-  display: () => {
+  displayUrl: () => {
     return new Promise(async (resolve, reject) => {
       let displayUrl = await db
         .get()
         .collection(collection.URL_COLLECTION)
         .find()
         .toArray();
-        resolve(displayUrl);
+      resolve(displayUrl);
     });
   },
   findUrl: (url) => {
     return new Promise(async (resolve, reject) => {
-      let fetchedUrl = {};
-      fetchedUrl = await db
+      await db
         .get()
         .collection(collection.URL_COLLECTION)
-        .find({ shrinkedUrl: url }, { shrinkedUrl: 0, _id: 0 })
-        .toArray();
-      //console.log(fetchedUrl[0]);
-      resolve(fetchedUrl[0]);
+        .findOne({ shrinkedUrl: url })
+        .then((fetchedUrl) => {
+          resolve(fetchedUrl);
+        });
+    });
+  },
+  deleteUrl: (id) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collection.URL_COLLECTION)
+        .deleteOne({ _id: ObjectId(id) })
+        .then((data) => {
+          resolve(data);
+        });
     });
   },
 };

@@ -5,7 +5,7 @@ var shortid = require("shortid");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  mainfunctions.display().then((displayUrl) => {
+  mainfunctions.displayUrl().then((displayUrl) => {
     res.render("index", { title: "URL Shortner", displayUrl });
   });
 });
@@ -14,7 +14,13 @@ router.post("/shrink", (req, res) => {
   let shorturl = {};
   shorturl.orginalUrl = req.body.URL;
   shorturl.shrinkedUrl = shortid.generate(req.body.URL);
-  mainfunctions.add(shorturl, () => {
+  mainfunctions.addUrl(shorturl, () => {
+    res.redirect("/");
+  });
+});
+//Delete Url from database
+router.get("/delete/:id", (req, res) => {
+  mainfunctions.deleteUrl(req.params.id).then((response) => {
     res.redirect("/");
   });
 });
@@ -28,4 +34,5 @@ router.get("/:shrinkedUrl", (req, res) => {
     } else res.redirect(response.orginalUrl);
   });
 });
+
 module.exports = router;
