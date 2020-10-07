@@ -29,7 +29,7 @@
         <tr>
           <td><a href="{{this.orginalUrl}}">{{this.orginalUrl}}</a></td>
           <td><a href="/{{this.shrinkedUrl}}">{{this.shrinkedUrl}}</a></td>
-          <td><a href="/delete/{{this._id}}" class="btn btn-outline-danger">Delete</a></td>
+          <td><a href="/delete/{{this._id}}" class="btn btn-outline-danger" onclick="return confirm('Are you sure ??')">Delete</a></td>
         </tr>
         {{/each}}
       </tbody>
